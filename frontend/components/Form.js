@@ -3,7 +3,7 @@ import React from 'react'
 export default class Form extends React.Component {
   constructor() {
     super();
-    this.setState = {
+    this.state = {
       toDoText: ''
     }
   }
@@ -14,23 +14,21 @@ export default class Form extends React.Component {
     })
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addToDo(e, this.state.toDoText)
+    this.props.addToDo(this.state.toDoText)
     this.setState({
       toDoText: ''
     })
   }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <input 
-        type="text"
-        name="toDo"
-        value={this.state.toDoText}
         onChange={this.handleChange}
         />
-        <button>Add Todo</button>
+        <button type="submit">Add Todo</button>
       </form>
     )
   }

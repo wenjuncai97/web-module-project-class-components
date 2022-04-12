@@ -1,48 +1,49 @@
 import React from 'react'
-import ReactDom from 'react-dom';
 import Form from './Form'
 import ToDoList from './TodoList'
-
-const toDo = [
-  {
-    name: 'Walk the dog',
-    id: 1,
-    completed: false
-  },
-  {
-    name: 'Learn React',
-    id: 2,
-    completed: false
-  },
-  {
-    name: 'Have fun',
-    id: 3,
-    completed: false
-  }
-]
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      toDo: toDo
+      toDo: [
+        {
+          task: 'Walk the dog',
+          id: 1,
+          completed: false
+        },
+        {
+          task: 'Learn React',
+          id: 2,
+          completed: false
+        },
+        {
+          task: 'Have fun',
+          id: 3,
+          completed: false
+        }
+      ]
     }
   }
 
-  addToDo = (e, item) => {
+  addToDo = (task) => {
     const newToDo = {
-      name: toDo,
+      task: task,
       id: Date.now(),
       completed: false
     }
     this.setState({
+      ...this.state,
       toDo: [...this.state.toDo, newToDo]
     })
   }
 
-  clearCompleted = (e) => {
+  clearCompleted = () => {
     this.setState({
-      toDo: this.state.toDo.filter(item => !item.completed)
+      ...this.state,
+      toDo: this.state.toDo.filter(item => {
+        return (item.completed === false);
+      })
     })
   }
 
@@ -61,18 +62,20 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { toDo } = this.state;
     return (
       <div className="App">
+        <h1>TODOS</h1>
         <div className="form">
+          <ToDoList
+            toDo={toDo}
+            toggleToDo={this.toggleToDo}
+          />
           <Form addToDo={this.addToDo} />
         </div>
-        <ToDoList 
-          toDo={this.state.toDo}
-          toggleItem={this.toggleItem}
-          />
         <button
           className="clear-btn"
-          onClick={this.clearCompelted}>
+          onClick={this.clearCompleted}>
           Clear Completed
         </button>
       </div>

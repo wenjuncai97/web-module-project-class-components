@@ -1,14 +1,13 @@
 import React from 'react'
 
 export default class Todo extends React.Component {
-  constructor () {
-    super();
+  handleClick = () => {
+    this.props.toggleToDo(this.props.toDo.id);
   }
+
   render() {
     return (
-      <div onClick={() => props.item.id} className ={`item${props.item.completed ? 'completed' : ''}`}>
-        <p>{this.props.item.name}</p>
-      </div>
+      <li onClick={this.handleClick}>{this.props.toDo.task} {this.props.toDo.completed ? <span>- completed</span> : <span></span>}</li>
     )
   }
 }
